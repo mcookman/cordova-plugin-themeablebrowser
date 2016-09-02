@@ -340,13 +340,18 @@
 {
     NSURLRequest* request = [NSURLRequest requestWithURL:url];
 
+	NSMutableURLRequest *requestObj = [NSMutableURLRequest requestWithURL:url];
+	[requestObj setValue:@"Mozilla/5.0" forHTTPHeaderField:@"User_Agent"];
+
 #ifdef __CORDOVA_4_0_0
     // the webview engine itself will filter for this according to <allow-navigation> policy
     // in config.xml for cordova-ios-4.0
-    [self.webViewEngine loadRequest:request];
+   // [self.webViewEngine loadRequest:request];
+    [self.webViewEngine loadRequest:requestObj];
 #else
     if ([self.commandDelegate URLIsWhitelisted:url]) {
-        [self.webView loadRequest:request];
+        //[self.webView loadRequest:request];
+		[self.webView loadRequest:requestObj];
     } else { // this assumes the openInThemeableBrowser can be excepted from the white-list
         [self openInThemeableBrowser:url withOptions:options];
     }
@@ -1199,14 +1204,17 @@
 - (void)navigateTo:(NSURL*)url
 {
     NSURLRequest* request = [NSURLRequest requestWithURL:url];
-
+	NSMutableURLRequest *requestObj = [NSMutableURLRequest requestWithURL:url];
+	[requestObj setValue:@"Mozilla/5.0" forHTTPHeaderField:@"User_Agent"];
     if (_userAgentLockToken != 0) {
-        [self.webView loadRequest:request];
+        //[self.webView loadRequest:request];
+		[self.webView loadRequest:requestObj];
     } else {
         [CDVUserAgentUtil acquireLock:^(NSInteger lockToken) {
             _userAgentLockToken = lockToken;
             [CDVUserAgentUtil setUserAgent:_userAgent lockToken:lockToken];
-            [self.webView loadRequest:request];
+            //[self.webView loadRequest:request];
+			[self.webView loadRequest:requestObj];
         }];
     }
 }
