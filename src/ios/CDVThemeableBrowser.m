@@ -1204,17 +1204,17 @@
 - (void)navigateTo:(NSURL*)url
 {
     NSURLRequest* request = [NSURLRequest requestWithURL:url];
-	NSMutableURLRequest *requestObj = [NSMutableURLRequest requestWithURL:url];
-	[requestObj setValue:@"Mozilla/5.0" forHTTPHeaderField:@"User_Agent"];
+	//NSMutableURLRequest *requestObj = [NSMutableURLRequest requestWithURL:url];
+	//[requestObj setValue:@"Mozilla/5.0" forHTTPHeaderField:@"User_Agent"];
     if (_userAgentLockToken != 0) {
-        //[self.webView loadRequest:request];
-		[self.webView loadRequest:requestObj];
+        [self.webView loadRequest:request];
+		//[self.webView loadRequest:requestObj];
     } else {
         [CDVUserAgentUtil acquireLock:^(NSInteger lockToken) {
             _userAgentLockToken = lockToken;
             [CDVUserAgentUtil setUserAgent:_userAgent lockToken:lockToken];
-            //[self.webView loadRequest:request];
-			[self.webView loadRequest:requestObj];
+            [self.webView loadRequest:request];
+			//[self.webView loadRequest:requestObj];
         }];
     }
 }
