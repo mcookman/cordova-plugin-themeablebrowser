@@ -237,7 +237,7 @@
     }
 
     if (self.themeableBrowserViewController == nil) {
-        NSString* originalUA = @"Mozilla/5.0";//[CDVUserAgentUtil originalUserAgent];
+        NSString* originalUA = @"Mozilla/5.0 (iPhone; CPU iPhone OS 9_2 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13C75 Safari/601.1";//[CDVUserAgentUtil originalUserAgent];
         self.themeableBrowserViewController = [[CDVThemeableBrowserViewController alloc]
                                                initWithUserAgent:originalUA prevUserAgent:[self.commandDelegate userAgent]
                                                browserOptions: browserOptions
